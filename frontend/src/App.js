@@ -1,39 +1,25 @@
-// import './App.css';
-// import { useState } from "react";
-import * as React from 'react';
+import { Component } from 'react';
+import axios from "axios";
+// import React from 'react';
+import Question from './components/Question';
 
-function App() {
-   const [checked, setChecked] = React.useState(false);
+class App extends Component{
+    questionList=[1,2,3,4];
 
-  const handleChange = () => {
-    setChecked(!checked);
-  };
-  
-  return (
-     <div>
-      <label>
-        <input
-          type="checkbox"
-          checked={checked}
-          onChange={handleChange}
-        />
-        My Value
-      </label>
 
-      <p>Is "My Value" checked? {checked.toString()}</p>
-    </div>
-  )
+    render(){
+        return(
+        this.questionList.map(
+            (questionNum)=>
+            <div>
+                <Question key={questionNum} questionNum={questionNum} ></Question>
+            <br/><br/><br/>
+                </div>
+        )
+        )
+    }
+
+
 }
 
 export default App;
-
-
-  // <form onSubmit={this.handleFormSubmit}>
-  //               <h1>customer adding</h1>
-  //               profile image : <input type="file" id="profileImage" name="file" file={this.state.file} value={this.state.fileName} onChange={this.handleFileChange} /><br />
-  //               name : <input type="text" name="userName"  value={this.state.userName} onChange={this.handleValueChange} /><br />
-  //               birthday : <input type="text" name="birthday" value={this.state.birthday} onChange={this.handleValueChange} /><br />
-  //               gender : <input type="text" name="gender" value={this.state.gender} onChange={this.handleValueChange} /><br />
-  //               job : <input type="text" name="job" value={this.state.job} onChange={this.handleValueChange} /><br />
-  //               <button type="submit">adding</button>
-  //           </form>
