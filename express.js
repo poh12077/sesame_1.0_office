@@ -41,12 +41,12 @@ app.post('/check', (req,res)=>{
   })
 })
 
-app.post('/checkedOption', (req,res)=>{
+app.post('/questionAnswer', (req,res)=>{
     let checkedOption = req.body.checkedOption;
     let questionNum= req.body.questionNum;
     let sql = {
-      text : 'UPDATE checkedOption SET checkedOption = $1 WHERE question =$2;',
-      values: [checkedOption, questionNum],
+      text : 'UPDATE totalResponseResult SET '+checkedOption+' = '+checkedOption+' +1 WHERE questionNum =$1;',
+      values: [questionNum],
     }
     connection.query(sql )
     .then((DBRes)=>{
@@ -60,7 +60,7 @@ app.post('/checkedOption', (req,res)=>{
     })
   })
 
-  
+
 
   
 app.listen(port, () => {
