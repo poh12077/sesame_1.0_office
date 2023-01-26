@@ -23,23 +23,7 @@ const connection = new Client({
 
 connection.connect();
 
-app.post('/check', (req,res)=>{
-  let isChecked = req.body.isChecked;
-  let sql = {
-    text : 'UPDATE ISCHECKED SET ISCHECKED = $1 WHERE NUMBER =1;',
-    values: [isChecked],
-  }
-  connection.query(sql )
-  .then((DBRes)=>{
-    res.send(DBRes.rows);
-    console.log(DBRes);
-    connection.end;
-  })
-  .catch((err)=>{
-    console.log(err);
-    connection.end;
-  })
-})
+
 
 app.post('/questionAnswer', (req,res)=>{
     let checkedOption = req.body.checkedOption;
@@ -60,6 +44,30 @@ app.post('/questionAnswer', (req,res)=>{
     })
   })
 
+  app.post('/sendAccount', (req,res)=>{
+    let id = req.body.id;
+    let sql = {
+      text : 'SELECT password from userinfo where id = $1;',
+      values: [id],
+    }
+    connection.query(sql )
+    .then((DBRes)=>{
+      if (req.body.password === DBRes.rows[0].password ){
+        //success
+        res.send('0');
+      }else{
+        //password wrong
+        res.send('1');
+      }
+      connection.end;
+    })
+    .catch((err)=>{
+      //id wrong
+      console.log(err);
+      res.send('2');
+      connection.end;
+    })
+  })
 
 
   

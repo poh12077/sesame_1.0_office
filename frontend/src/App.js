@@ -1,22 +1,24 @@
 import { Component } from 'react';
-import axios from "axios";
-// import React from 'react';
-import Question from './components/Question';
+import MainPage from './components/MainPage';
+import Login from './components/Login';
 import './style.css';
-
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 class App extends Component {
-    questionList = [1, 2, 3, 4];
 
     render() {
         return (
-            this.questionList.map(
-                (questionNum) =>
-                    <div className='question' >
-                        <Question key={questionNum} questionNum={questionNum} ></Question>
-                        <br /><br /><br />
-                    </div>
-            )
+            <div className="App">
+     
+            <BrowserRouter>
+                  <Routes>
+                      <Route path={"/MainPage"} element={<MainPage />}></Route>
+                      <Route path={"/Login"} element={<Login />}></Route>
+                      <Route path={"/"} element={<MainPage />}></Route>
+                  </Routes>
+                </BrowserRouter>
+              </div>
+
         )
     }
 
