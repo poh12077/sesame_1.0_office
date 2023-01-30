@@ -3,6 +3,7 @@ import axios from "axios";
 import '../style.css';
 import DoughnutChart from "./DoughnutChart";
 import RadarChart from "./RadarChart";
+import  BarChart  from "./BarChart";
 import Test from './Test';
 
 let questionNum=0;
@@ -76,8 +77,8 @@ class Question extends React.Component {
                   <br />
                   <button className="formButton" type="submit"  >adding</button>
                 </fieldset>
-                {/* <RadarChart></RadarChart> */}
-                <Test questionNum={questionNum} ></Test>
+                {/* <RadarChart questionNum={questionNum} ></RadarChart> */}
+                <BarChart questionNum={questionNum}></BarChart>
               </form>
               
       </div>

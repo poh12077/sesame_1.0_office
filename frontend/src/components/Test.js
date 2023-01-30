@@ -47,7 +47,7 @@ class Test extends Component {
         pointHoverBorderColor: 'rgb(255, 99, 132)'
       }, {
         label: 'man',
-        data: [50,70,50,70,50,50],
+        data: [50, 70, 50, 70, 50, 50],
         fill: true,
         backgroundColor: 'rgba(54, 162, 235, 0.2)',
         borderColor: 'rgb(54, 162, 235)',
@@ -60,76 +60,42 @@ class Test extends Component {
   }
 
  
+  componentDidMount() {
+    let body = {
+      gender: 'male',
+      questionNum: this.props.questionNum
+    }
+    axios.post('/api/responseResult', body)
+      .then(
+        (res) => {
+          this.setState(
+            (prevStat) => {
 
-  componentDidMount(){
-      let body = {
-        gender : 'male',
-        questionNum : this.props.questionNum
-      }
-      axios.post('/api/responseResult', body)
-       .then(
-        (res)=>{
-           this.setState( prevStat => 
-            {
-              let q=[];
-              for(let x in res.data[0]){
-                if(x!=='questionnum'){
-                  q.push(res.data[0][x]);
+              let responseResult = [];
+              for (let key in res.data[0]) {
+                if (key !== 'questionnum') {
+                  responseResult.push(res.data[0][key]);
                 }
               }
-              let a = prevStat.datasets;
-              let b = a.map( 
-                element =>  
-                {
-                  return {
-                    ...element,
-                    data: q
-                  }
-                }
-              )
-              return { datasets : b }
-            }             
-            )
-        }
-       )
-  }
 
-  
-  componentDidMount(){
-      let body = {
-        gender : 'male',
-        questionNum : this.props.questionNum
-      }
-      axios.post('/api/responseResult', body)
-       .then(
-        (res)=>{
-           this.setState( prevStat => 
-            {
-              let q=[];
-              for(let x in res.data[0]){
-                if(x!=='questionnum'){
-                  q.push(res.data[0][x]);
-                }
-              }
-              let a = prevStat.datasets;
-              let b = a.map( 
-                element =>  
-                {
-                  return {
-                    ...element,
-                    data: q
+              return {
+                datasets: prevStat.datasets.map(
+                  eli => {
+                    return {
+                      ...eli,
+                      data: responseResult
+                    }
                   }
-                }
-              )
-              return { datasets : b }
-            }             
-            )
+                )
+              }
+            }
+          )
         }
-       )
+      )
   }
 
 
-  render(){
+  render() {
     return <Radar data={this.state} />;
   }
 }
