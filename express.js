@@ -29,7 +29,7 @@ app.post('/questionAnswer', (req,res)=>{
     let checkedOption = req.body.checkedOption;
     let questionNum= req.body.questionNum;
     let sql = {
-      text : 'UPDATE totalResponseResult SET '+checkedOption+' = '+checkedOption+' +1 WHERE questionNum =$1;',
+      text : 'UPDATE maletotalresponseresult SET '+checkedOption+' = '+checkedOption+' +1 WHERE questionNum =$1;',
       values: [questionNum],
     }
     connection.query(sql )
@@ -54,9 +54,10 @@ app.post('/questionAnswer', (req,res)=>{
     .then((DBRes)=>{
       if (req.body.password === DBRes.rows[0].password ){
         //success
-        res.send('0');
+        res.send();
       }else{
         //password wrong
+        res.statusCode=401;
         res.send('1');
       }
       connection.end;
@@ -64,12 +65,33 @@ app.post('/questionAnswer', (req,res)=>{
     .catch((err)=>{
       //id wrong
       console.log(err);
+      res.statusCode=401;
       res.send('2');
       connection.end;
     })
   })
 
+  app.post('/api/responseResult',(req,res)=>{
+    let tableName;
+    if(req.body.gender='male'){
+      tableName = 'maletotalresponseresult';
+    }else{
+      tableName = 'femaletotalresponseresult'
+    }
+    let sql = {
+      text : 'SELECT * from '+tableName+' where questionnum = $1;',
+      values: [ req.body.questionNum],
+    }
 
+    connection.query(sql )
+    .then((DBRes)=>{
+      res.send(DBRes.rows);
+    })
+    .catch((err)=>{
+     
+    })
+
+  })
   
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)

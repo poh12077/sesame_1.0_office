@@ -1,6 +1,11 @@
 import React from "react";
 import axios from "axios";
 import '../style.css';
+import DoughnutChart from "./DoughnutChart";
+import RadarChart from "./RadarChart";
+import Test from './Test';
+
+let questionNum=0;
 
 class Question extends React.Component {
 
@@ -46,30 +51,39 @@ class Question extends React.Component {
     return axios.post(url, formData, config);
   }
 
+
   render() {
+    questionNum++;
     return (
-      <form className="form" onSubmit={this.handleFormSubmit}>
-        <fieldset className="fieldset" >
-          <legend>1. pick one please</legend>
-          {
-            this.state.options.map(option => (
-              <div>
-                <label>
-                  <input
-                    type="checkbox"
-                    value={option.num}
-                    onChange={this.handleChange}
-                  /> {option.statement}
-                </label>
-                <br />
-              </div>
-            ))
-          }
-          <br />
-          <button className="button" type="submit"  >adding</button>
-        </fieldset>
-      </form>
+      <div className='question'>
+        <form className="form" onSubmit={this.handleFormSubmit}>
+                <fieldset className="fieldset" >
+                  <legend>1. pick one please</legend>
+                  {
+                    this.state.options.map(option => (
+                      <div>
+                        <label>
+                          <input
+                            type="checkbox"
+                            value={option.num}
+                            onChange={this.handleChange}
+                          /> {option.statement}
+                        </label>
+                        <br />
+                      </div>
+                    ))
+                  }
+                  <br />
+                  <button className="formButton" type="submit"  >adding</button>
+                </fieldset>
+                {/* <RadarChart></RadarChart> */}
+                <Test questionNum={questionNum} ></Test>
+              </form>
+              
+      </div>
+      
     )
+    
   }
 }
 

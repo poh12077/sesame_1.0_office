@@ -1,6 +1,6 @@
 body {
-    /* background-color: lightblue; */
-      background-color: gray;
+    background-color: lightblue;
+      /* background-color: gray; */
   }
   
 .question{
@@ -10,6 +10,7 @@ body {
 
 .form {
     background-color: #fff;
+    /* background-color: lightcoral; */
     width:85%;
     max-width: 500px;
     margin: auto;
@@ -27,7 +28,7 @@ body {
     border-radius: 25px;
 }
 
-.button
+.formButton
 {
     /* margin: 5px; */
         margin-top: 8px;
@@ -38,3 +39,4 @@ body {
     
         margin-left: 5px;
 }
+

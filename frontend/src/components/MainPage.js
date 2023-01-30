@@ -18,7 +18,7 @@ let MainPage = () => {
                 <button onClick={login} >login</button>
                 {questionList.map(
                 (questionNum) =>
-                    <div className='question' >
+                    <div  >
                         <Question key={questionNum} questionNum={questionNum} ></Question>
                         <br /><br /><br />
                     </div>
