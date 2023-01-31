@@ -28,19 +28,26 @@ connection.connect();
 app.post('/questionAnswer', (req,res)=>{
     let checkedOption = req.body.checkedOption;
     let questionNum= req.body.questionNum;
+    let gender = req.body.gender;
+    let tableName=null;
+    if (gender == 'male'){
+      tableName = 'maletotalresponseresult';
+    }else{
+      tableName = 'femaletotalresponseresult';
+    }
     let sql = {
-      text : 'UPDATE maletotalresponseresult SET '+checkedOption+' = '+checkedOption+' +1 WHERE questionNum =$1;',
+      text : 'UPDATE '+tableName+' SET '+checkedOption+' = '+checkedOption+' +1 WHERE questionNum =$1;',
       values: [questionNum],
     }
     connection.query(sql )
     .then((DBRes)=>{
       res.send(DBRes.rows);
       console.log(DBRes);
-      connection.end;
+      // connection.end;
     })
     .catch((err)=>{
       console.log(err);
-      connection.end;
+      // connection.end;
     })
   })
 
@@ -60,20 +67,20 @@ app.post('/questionAnswer', (req,res)=>{
         res.statusCode=401;
         res.send('1');
       }
-      connection.end;
+      // connection.end;
     })
     .catch((err)=>{
       //id wrong
       console.log(err);
       res.statusCode=401;
       res.send('2');
-      connection.end;
+      // connection.end;
     })
   })
 
   app.post('/api/responseResult',(req,res)=>{
     let tableName;
-    if(req.body.gender='male'){
+    if(req.body.gender==='male'){
       tableName = 'maletotalresponseresult';
     }else{
       tableName = 'femaletotalresponseresult'

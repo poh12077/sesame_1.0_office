@@ -6,12 +6,11 @@ import RadarChart from "./RadarChart";
 import  BarChart  from "./BarChart";
 import Test from './Test';
 
-let questionNum=0;
-
 class Question extends React.Component {
 
   constructor(props) {
     super(props);
+    this.child = React.createRef();
     this.state = {
       options: [
         { num: 'optionOne', statement: "option1" },
@@ -44,17 +43,23 @@ class Question extends React.Component {
     const formData = new FormData();
     formData.append('checkedOption', this.state.checkedOption);
     formData.append('questionNum', this.state.questionNum);
+    formData.append('gender','male');
+    // formData.append('gender','female');
     const config = {
       headers: {
         'content-type': 'multipart/form-data'
       }
     }
-    return axios.post(url, formData, config);
+    axios.post(url, formData, config).then(
+      (res)=>{
+            this.child.current.stateRefresh();
+        // window.location.reload();
+      }
+    );
   }
 
 
   render() {
-    questionNum++;
     return (
       <div className='question'>
         <form className="form" onSubmit={this.handleFormSubmit}>
@@ -77,8 +82,8 @@ class Question extends React.Component {
                   <br />
                   <button className="formButton" type="submit"  >adding</button>
                 </fieldset>
-                {/* <RadarChart questionNum={questionNum} ></RadarChart> */}
-                <BarChart questionNum={questionNum}></BarChart>
+                {/* <RadarChart questionNum={this.props.questionNum} ></RadarChart> */}
+                <BarChart questionNum={this.props.questionNum} ref={this.child}  ></BarChart>
               </form>
               
       </div>

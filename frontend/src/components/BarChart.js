@@ -20,54 +20,60 @@ ChartJS.register(
   Legend
 );
 
-class BarChart extends React.Component{
-    constructor(props) {
-        super(props);
+class BarChart extends React.Component {
+  constructor(props) {
+    super(props);
 
-        this.state ={
-            labels: [
-                'option1',
-                'option2',
-                'option3',
-                'option4',
-                'option5',
-                'option6'
-              ],
-            datasets: [
-              {
-                label: 'Dataset 1',
-                data: [1,2,3,4,5,6,7],
-                backgroundColor: 'rgba(255, 99, 132, 0.5)',
-              },
-              {
-                label: 'Dataset 2',
-                data: [1,2,3,4,5,6,7],
-                backgroundColor: 'rgba(53, 162, 235, 0.5)',
-              },
-            ],
-        }
-    
+    this.state = {
+      labels: [
+        'option1',
+        'option2',
+        'option3',
+        'option4',
+        'option5',
+        'option6'
+      ],
+      datasets: [
+        {
+          key:'female',
+          label: 'woman',
+          data: null,
+          backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        },
+        {
+          key:'male',
+          label: 'man',
+          data: null,
+          backgroundColor: 'rgba(53, 162, 235, 0.5)',
+        },
+      ],
     }
 
- options = {
+  }
+
+  options = {
+    animation: {
+      //time
+      duration: 1000  
+    },
     responsive: true,
     plugins: {
       legend: {
-        position: 'top' ,
+        position: 'top',
       },
       title: {
-        display: true,
+        display: false,
         text: 'Chart.js Bar Chart',
       },
     },
   };
-  
-   
-  componentDidMount() {
+
+  callApi = (gender) => {
     let body = {
-      gender: 'male',
+      gender: gender,
       questionNum: this.props.questionNum
     }
+
     axios.post('/api/responseResult', body)
       .then(
         (res) => {
@@ -84,10 +90,15 @@ class BarChart extends React.Component{
               return {
                 datasets: prevStat.datasets.map(
                   eli => {
-                    return {
-                      ...eli,
-                      data: responseResult
+                    if(eli.key===body.gender){
+                      return {
+                        ...eli,
+                        data: responseResult
+                      }
+                    }else{
+                      return eli;
                     }
+                   
                   }
                 )
               }
@@ -97,10 +108,21 @@ class BarChart extends React.Component{
       )
   }
 
-   
-    render(){
-        return <Bar options={this.options} data={this.state} />;
-    }
+  componentDidMount() {
+    this.callApi('male');
+    this.callApi('female');
+  }
+
+  stateRefresh = () => {
+    this.callApi('male');
+    this.callApi('female');
+  }
+
+
+
+  render() {
+    return <Bar options={this.options} data={this.state} />;
+  }
 }
 
 export default BarChart;
