@@ -29,12 +29,11 @@ app.post('/questionAnswer', (req,res)=>{
     let checkedOption = req.body.checkedOption;
     let questionNum= req.body.questionNum;
     let gender = req.body.gender;
-    let tableName=null;
-    if (gender == 'male'){
-      tableName = 'maletotalresponseresult';
-    }else{
-      tableName = 'femaletotalresponseresult';
-    }
+    let tabName = req.body.tabName;
+
+    let tableName='totalresponseresult';
+    tableName = tabName+gender+tableName;
+
     let sql = {
       text : 'UPDATE '+tableName+' SET '+checkedOption+' = '+checkedOption+' +1 WHERE questionNum =$1;',
       values: [questionNum],
@@ -79,12 +78,11 @@ app.post('/questionAnswer', (req,res)=>{
   })
 
   app.post('/api/responseResult',(req,res)=>{
-    let tableName;
-    if(req.body.gender==='male'){
-      tableName = 'maletotalresponseresult';
-    }else{
-      tableName = 'femaletotalresponseresult'
-    }
+    let tableName='totalresponseresult';
+    let gender =req.body.gender;
+    let tabName = req.body.tabName;
+    tableName = tabName+gender+tableName;
+
     let sql = {
       text : 'SELECT * from '+tableName+' where questionnum = $1;',
       values: [ req.body.questionNum],

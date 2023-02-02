@@ -43,8 +43,10 @@ class Question extends React.Component {
     const formData = new FormData();
     formData.append('checkedOption', this.state.checkedOption);
     formData.append('questionNum', this.state.questionNum);
-    formData.append('gender','male');
-    // formData.append('gender','female');
+    // formData.append('gender','male');
+    formData.append('gender','female');
+    formData.append('tabName', this.props.tabName);
+    
     const config = {
       headers: {
         'content-type': 'multipart/form-data'
@@ -83,7 +85,7 @@ class Question extends React.Component {
                   <button className="formButton" type="submit"  >adding</button>
                 </fieldset>
                 {/* <RadarChart questionNum={this.props.questionNum} ></RadarChart> */}
-                <BarChart questionNum={this.props.questionNum} ref={this.child}  ></BarChart>
+                <BarChart questionNum={this.props.questionNum} ref={this.child} tabName={this.props.tabName} ></BarChart>
               </form>
               
       </div>

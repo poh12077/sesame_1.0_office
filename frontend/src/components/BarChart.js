@@ -71,7 +71,8 @@ class BarChart extends React.Component {
   callApi = (gender) => {
     let body = {
       gender: gender,
-      questionNum: this.props.questionNum
+      questionNum: this.props.questionNum,
+      tabName : this.props.tabName
     }
 
     axios.post('/api/responseResult', body)

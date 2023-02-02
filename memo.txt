@@ -1,3 +1,4 @@
-1. tab
+1. front timeout
 2. 대략적인 전체 ui
 3. checkbox 
+4. 질문 text 넣기 

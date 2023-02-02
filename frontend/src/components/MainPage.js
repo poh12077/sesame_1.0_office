@@ -1,30 +1,26 @@
 import Question from './Question';
 import '../style.css';
 import { useNavigate } from 'react-router-dom';
-
+import Tab from './Tab';
+import '../css/mainPage.css';
 
 let MainPage = () => {
 
-    let questionList = [1, 2, 3, 4];
 
     const movePage = useNavigate();
 
-    function login(){
-       movePage('/Login');
-     }
+    function login() {
+        movePage('/Login');
+    }
 
-        return (
-            <div>
-                <button onClick={login} >login</button>
-                {questionList.map(
-                (questionNum) =>
-                    <div  >
-                        <Question key={questionNum} questionNum={questionNum} ></Question>
-                        <br /><br /><br />
-                    </div>
-            )}
-            </div>
-        );
+    return (
+        <div className='mainPage' >
+            <button onClick={login} >login</button>
+
+            <Tab></Tab>
+          
+        </div>
+    );
 
 }
 

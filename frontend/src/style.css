@@ -11,8 +11,8 @@ body {
 .form {
     background-color: #fff;
     /* background-color: lightcoral; */
-    width:85%;
-    max-width: 500px;
+    width:100%;
+    /* max-width: 500px; */
     margin: auto;
     margin-top: 50px;
       padding-top: 15px;
