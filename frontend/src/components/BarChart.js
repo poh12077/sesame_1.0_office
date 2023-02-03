@@ -75,39 +75,90 @@ class BarChart extends React.Component {
       tabName : this.props.tabName
     }
 
-    axios.post('/api/responseResult', body)
-      .then(
-        (res) => {
-          this.setState(
-            (prevStat) => {
+    axios({
+      method:'post',
+      url: '/api/responseResult',
+      validateStatus: function (status) {
+        return status >= 200 && status < 300; // default
+      },
+      data: body,
+      timeout: 5000
+    }) .then(
+      (res) => {
+        this.setState(
+          (prevStat) => {
 
-              let responseResult = [];
-              for (let key in res.data[0]) {
-                if (key !== 'questionnum') {
-                  responseResult.push(res.data[0][key]);
-                }
-              }
-
-              return {
-                datasets: prevStat.datasets.map(
-                  eli => {
-                    if(eli.key===body.gender){
-                      return {
-                        ...eli,
-                        data: responseResult
-                      }
-                    }else{
-                      return eli;
-                    }
-                   
-                  }
-                )
+            let responseResult = [];
+            for (let key in res.data[0]) {
+              if (key !== 'questionnum') {
+                responseResult.push(res.data[0][key]);
               }
             }
-          )
-        }
-      )
+
+            return {
+              datasets: prevStat.datasets.map(
+                eli => {
+                  if(eli.key===body.gender){
+                    return {
+                      ...eli,
+                      data: responseResult
+                    }
+                  }else{
+                    return eli;
+                  }
+                 
+                }
+              )
+            }
+          }
+        )
+      }
+    )
+    
   }
+
+  // callApi = (gender) => {
+  //   let body = {
+  //     gender: gender,
+  //     questionNum: this.props.questionNum,
+  //     tabName : this.props.tabName
+  //   }
+
+  //   axios.post('/api/responseResult', body)
+  //     .then(
+  //       (res) => {
+  //         this.setState(
+  //           (prevStat) => {
+
+  //             let responseResult = [];
+  //             for (let key in res.data[0]) {
+  //               if (key !== 'questionnum') {
+  //                 responseResult.push(res.data[0][key]);
+  //               }
+  //             }
+
+  //             return {
+  //               datasets: prevStat.datasets.map(
+  //                 eli => {
+  //                   if(eli.key===body.gender){
+  //                     return {
+  //                       ...eli,
+  //                       data: responseResult
+  //                     }
+  //                   }else{
+  //                     return eli;
+  //                   }
+                   
+  //                 }
+  //               )
+  //             }
+  //           }
+  //         )
+  //       }
+  //     )
+  // }
+
+
 
   componentDidMount() {
     this.callApi('male');

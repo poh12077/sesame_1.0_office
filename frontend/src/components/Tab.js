@@ -3,60 +3,66 @@ import "../css/tab.css";
 import Question from "./Question";
 
 function Tabs() {
-    const [toggleState, setToggleState] = useState(1);
+    const [tabNum, setTabNum] = useState(0);
 
-    const toggleTab = (index) => {
-        setToggleState(index);
-    };
-
-    let questionList = [1, 2, 3, 4];
+    let questionList = [0, 1, 2, 3, 4];
+    let loveTab=['aa','bb','cc','dd','ee'];
+    let marriageTab=['ff','g','h','dd','ee'];
+    let questionStatement=[loveTab, marriageTab];
     let tabName=['love', 'marriage'];
+    let options = [
+        { num: 'optionOne', statement: "option1" },
+        { num: 'optionTwo', statement: "option2" },
+        { num: 'optionThree', statement: "option3" },
+        { num: 'optionFour', statement: "option4" }
+      ];
+
     return (
         <div className="tabContainer">
 
             <div className="tabMenu">
                 <button
-                    className={toggleState === 1 ? "tab activeTab" : "tab"}
-                    onClick={() => toggleTab(1)}
+                    className={tabNum === 0 ? "tab activeTab" : "tab"}
+                    onClick={() => setTabNum(0)}
                 >
                     Tab 1
                 </button>
                 <button
-                    className={toggleState === 2 ? "tab activeTab" : "tab"}
-                    onClick={() => toggleTab(2)}
+                    className={tabNum === 1 ? "tab activeTab" : "tab"}
+                    onClick={() => setTabNum(1)}
                 >
                     Tab 2
                 </button>
                 <button
-                    className={toggleState === 3 ? "tab activeTab" : "tab"}
-                    onClick={() => toggleTab(3)}
+                    className={tabNum === 2 ? "tab activeTab" : "tab"}
+                    onClick={() => setTabNum(2)}
                 >
                     Tab 3
                 </button>
             </div>
 
             <div className="tabContentWrapper">
-                <div className={toggleState === 1 ? "tabContent  activeTabcontent" : "tabContent"}   >
+                <div className={tabNum === 0 ? "tabContent  activeTabcontent" : "tabContent"}   >
                     {questionList.map(
                         (questionNum) =>
                             <div  >
-                                <Question key={questionNum} questionNum={questionNum} tabName={tabName[0]} ></Question>
+                                <Question key={questionNum} questionNum={questionNum} tabName={tabName[tabNum]} questionStatement={questionStatement[tabNum][questionNum]} options={options} ></Question>
                                 <br /><br /><br />
                             </div>
                     )}
                 </div>
 
-                <div className={toggleState === 2 ? "tabContent  activeTabcontent" : "tabContent"}   >
+                <div className={tabNum === 1 ? "tabContent  activeTabcontent" : "tabContent"}   >
                 {questionList.map(
                         (questionNum) =>
                             <div  >
-                                <Question key={questionNum} questionNum={questionNum} tabName={tabName[1]} ></Question>
+                                <Question key={questionNum} questionNum={questionNum} tabName={tabName[tabNum]} questionStatement={questionStatement[tabNum][questionNum]} options={options} ></Question>
                                 <br /><br /><br />
                             </div>
                     )}
                 </div>
 
-                <div className={toggleState === 3 ? "tabContent  activeTabcontent" : "tabContent"}     >
+                <div className={tabNum === 2 ? "tabContent  activeTabcontent" : "tabContent"}     >
                     <p>
                         cccc
                     </p>
