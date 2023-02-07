@@ -77,6 +77,27 @@ app.post('/questionAnswer', (req,res)=>{
     })
   })
 
+  
+  app.post('/sendSignupInfo', (req,res)=>{
+    let id = req.body.id;
+    let password =req.body.password;
+    let gender = req.body.gender;
+    let birthday = req.body.birthday;
+
+    let sql = {
+      text : 'insert into userinfo values ($1, $2, $3, $4)',
+      values: [id, password, gender, birthday ],
+    }
+    connection.query(sql )
+    .then((DBRes)=>{
+      res.send(DBRes.rows);
+    })
+    .catch((err)=>{
+      res.send(err);
+    })
+  })
+
+
   app.post('/api/responseResult',(req,res)=>{
     let tableName='totalresponseresult';
     let gender =req.body.gender;

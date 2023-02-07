@@ -15,6 +15,13 @@
     font-size: 0.75em;
 }
 
+#genderSignup{
+    display: flex;
+}
+
+.genderRadio{
+    margin: 10px;
+}
 .cover {
     background-color: white;
     width: 70%;
